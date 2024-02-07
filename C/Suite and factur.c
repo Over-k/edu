@@ -38,8 +38,8 @@ int main() {
     printf("Suite [for]      | %d\n",suite(x));
     printf("suite [recursive]| %d\n",suite1(x));
     printf("=================\n");
-    printf("Facture [for]    | %d\n",facture(x));
-    printf("suite [recursive]| %d\n", facture1(x));
+    printf("Facture [for]      | %d\n",facture(x));
+    printf("Facture [recursive]| %d\n", facture1(x));
     printf("=================\n");
     return 0;
 }
