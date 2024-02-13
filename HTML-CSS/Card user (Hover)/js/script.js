@@ -28,8 +28,6 @@ window.onload = () => {
         "bio": "Live and be free..."
     }];
     Data.forEach(item => {
-        
-          console.log(item.fullname);
           document.querySelector(".content").innerHTML +=
           `
             <div class="card">
@@ -43,4 +41,15 @@ window.onload = () => {
             </div>`;
         
       });
+          const colorThief = new ColorThief();
+          const cards = document.querySelectorAll(".content .card");
+          cards.forEach(card =>{
+            let image = card.querySelector("img");
+            image.addEventListener("load", ()=> {
+                let color = colorThief.getColor(image);
+                    image.style.boxShadow = `-1px 1px 11px 6px rgb(${color[0]},${color[1]},${color[2]})`;
+                    image.style.border = `rgb(${color[0]},${color[1]},${color[2]})`;
+                });
+          })
+
 }
