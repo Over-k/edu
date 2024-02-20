@@ -1,4 +1,4 @@
-# How to Install Java on Windows
+# Install Java on Windows
 
 Introduction
 
@@ -49,6 +49,32 @@ After running the installation file, the installation wizard welcome screen appe
 2. Choose the destination folder for the Java installation files or stick to the default path. Click **Next** to proceed.
 
 3. Wait for the wizard to finish the installation process until the *Successfully Installed* message appears. Click **Close** to exit the wizard.
+
+# Install Java compiler
+
+## What is a Java compiler
+
+A Java compiler is a software program that converts your basic Java text into a platform-independent Java file. This file can be run on any platform that supports the Java language.
+
+If you write Java code, then you need a Java compiler. While you could technically write Java code without a compiler, it would be very difficult to run or debug your code. Manually reformatting your Java files would take a lot of extra time and effort, and is prone to errors.
+
+Popular Java compilers include GCJ, Eclipse, and the aptly named Java Programming Language Compiler. You can read our assessments of these compilers, and many others, in the roundup below.
+
+## IDE in Java
+
+IDE stands for “integrated development environment” and refers to the software that developers use for building and programming applications. Ideally, your IDE is a source code editor, a local build automator, and a debugger all in one. Some are, of course, more robust than others.
+
+The Java IDE is no different, and should provide you with the tools you need to compile and run your final Java program. If it doesn’t do that, we’ve compiled a list of 22 Java IDEs for you to find the right one for the job.
+
+## Best Java Compilers
+
+> - [Eclipse](https://www.eclipse.org/downloads/packages/release/juno/sr2/eclipse-ide-java-developers)
+> - [NetBeans](https://netbeans.apache.org/)
+> - [Tabnine](https://www.tabnine.com/)
+> - [Codenvy](https://developers.redhat.com/products/openshift-dev-spaces/overview)
+> - [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+> - [BlueJ](https://www.bluej.org/)
+>   ...
 
 ### Write a Test Java Script
 
