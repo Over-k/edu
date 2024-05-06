@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Form</title>
+  </head>
+  <body>
+    <form action="/api" method="post">
+      <label for="fullname">Full Name:</label><br />
+      <input type="text" id="fullname" name="fullname" value="over-k" /><br />
+      <label for="password">Password:</label><br />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        value="password123"
+      /><br />
+      <label for="message">Message:</label><br />
+      <input type="text" id="message" name="message" /><br /><br />
+      <!--bla value-->
+      <label for="email">Email:</label><br />
+      <input type="email" id="email" name="email" multiple /><br />
+      <label for="tel">Tel:</label><br />
+      <input type="tel" id="tel" name="tel" /><br />
+      <label for="url">URL:</label><br />
+      <input type="url" id="url" name="url" /><br />
+
+      <input
+        type="number"
+        name="age"
+        id="age"
+        min="1"
+        max="10"
+        step="2"
+      /><br />
+
+      <label for="price">Choose a maximum house price: </label><br />
+      <input
+        type="range"
+        name="price"
+        id="price"
+        min="50000"
+        max="500000"
+        step="100"
+        value="250000"
+      />
+      <output class="price-output" for="price"></output><br />
+
+      <label for="myDate">When are you available this summer?</label><br />
+      <input
+        type="date"
+        name="myDate"
+        min="2013-06-01"
+        max="2013-08-31"
+        step="7"
+        id="myDate"
+      /><br />
+
+      <label for="color">Select:</label><br />
+      <input type="color" name="color" id="color" /><br />
+      <label for="select">When are you available this summer?</label><br />
+      <select id="simple" name="simple">
+        <option>Banana</option>
+        <option selected>Cherry</option>
+        <option>Lemon</option></select
+      ><br />
+
+      <label for="myFruit">What's your favorite fruit?</label><br />
+      <input
+        type="text"
+        name="myFruit"
+        id="myFruit"
+        list="mySuggestion"
+      /><br />
+      <datalist id="mySuggestion">
+        <option>Apple</option>
+        <option>Banana</option>
+        <option>Blackberry</option>
+        <option>Blueberry</option>
+        <option>Lemon</option>
+        <option>Lychee</option>
+        <option>Peach</option>
+        <option>Pear</option></datalist
+      ><br />
+      <label for="meter">Meter(75): </label><br />
+      <meter min="0" max="100" value="75" low="33" high="66" optimum="0">
+        75</meter
+      ><br />
+
+      <ul>
+        <li>
+          <label for="carrots">Carrots</label>
+          <input
+            type="checkbox"
+            id="carrots"
+            name="vegetable"
+            value="carrots"
+            checked
+          />
+        </li>
+        <li>
+          <label for="peas">Peas</label>
+          <input type="checkbox" id="peas" name="vegetable" value="peas" />
+        </li>
+        <li>
+          <label for="cabbage">Cabbage</label>
+          <input
+            type="checkbox"
+            id="cabbage"
+            name="vegetable"
+            value="cabbage"
+          />
+        </li>
+      </ul>
+      <br />
+      <ul>
+        <li>
+          <label for="soup">Soup</label>
+          <input type="radio" id="soup" name="meal" value="soup" checked />
+        </li>
+        <li>
+          <label for="curry">Curry</label>
+          <input type="radio" id="curry" name="meal" value="curry" />
+        </li>
+        <li>
+          <label for="pizza">Pizza</label>
+          <input type="radio" id="pizza" name="meal" value="pizza" />
+        </li>
+      </ul>
+      <br />
+
+      <input
+        type="file"
+        name="file"
+        id="file"
+        accept="image/*"
+        multiple
+      /><br />
+
+      <textarea cols="30" rows="8"></textarea><br />
+
+      <input type="submit" value="Submit" /><br />
+    </form>
+  </body>
+  <script>
+    const form = document.querySelector("form");
+    const price = document.querySelector("#price");
+    const output = document.querySelector(".price-output");
+
+    output.textContent = price.value;
+
+    price.addEventListener("input", () => {
+      output.textContent = price.value;
+    });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+    });
+  </script>
+</html>
