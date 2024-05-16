@@ -1,0 +1,16 @@
+C:\Users\lenovo\source\repos\SocieteImmobiliere\bin\Debug\net8.0-windows\SocieteImmobiliere.exe
+C:\Users\lenovo\source\repos\SocieteImmobiliere\bin\Debug\net8.0-windows\SocieteImmobiliere.deps.json
+C:\Users\lenovo\source\repos\SocieteImmobiliere\bin\Debug\net8.0-windows\SocieteImmobiliere.runtimeconfig.json
+C:\Users\lenovo\source\repos\SocieteImmobiliere\bin\Debug\net8.0-windows\SocieteImmobiliere.dll
+C:\Users\lenovo\source\repos\SocieteImmobiliere\bin\Debug\net8.0-windows\SocieteImmobiliere.pdb
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\SocieteImmobiliere.Form1.resources
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\SocieteImmobiliere.csproj.GenerateResource.cache
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\SocieteImmobiliere.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\SocieteImmobiliere.AssemblyInfoInputs.cache
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\SocieteImmobiliere.AssemblyInfo.cs
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\SocieteImmobiliere.csproj.CoreCompileInputs.cache
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\SocieteImmobiliere.dll
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\refint\SocieteImmobiliere.dll
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\SocieteImmobiliere.pdb
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\SocieteImmobiliere.genruntimeconfig.cache
+C:\Users\lenovo\source\repos\SocieteImmobiliere\obj\Debug\net8.0-windows\ref\SocieteImmobiliere.dll
