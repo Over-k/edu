@@ -1,36 +1,39 @@
 fileName = "Python/text.txt"
+file = open(fileName, "r").read().strip().replace("\n"," ").replace("."," ").replace(","," ")
 
-# words
-file = open(fileName, "r").read().lower().strip().replace("\n"," ").replace("."," ").replace(","," ")
-words = file.split(" ")
-staticsWords = {}
-for word in words:
-    if "" != word:
-        try:
-            staticsWords[word] += 1
-        except:
-            staticsWords[word] = 1
-sortedWords = sorted(staticsWords.items(),key=lambda x:x[1],reverse=True)
+def statistics(items):
+    static = {}
+    for item in items:
+        if item.isalnum():
+            try:
+                static[item] += 1
+            except:
+                static[item] = 1
+    sortedStatistic = sorted(static.items(),key=lambda x:x[1],reverse=True)
+    return sortedStatistic
 
-# characters
-characters = file
-staticsCharacters = {}
-for character in characters:
-    if character.isalnum():
-        try:
-            staticsCharacters[character] += 1
-        except:
-            staticsCharacters[character] = 1
-sortedCharacters = sorted(staticsCharacters.items(),key=lambda x:x[1],reverse=True)
-
-def tablePrint(title,myData):
+def printData(title, myData, basicInfo, printTable):
     print(title)
-    max_col1 = max(len(col1) for col1, _ in myData)
-    max_col2 = len(str(max(col2 for _, col2 in myData)))
-    print("="*(7+max_col1+max_col2))
-    for row1, row2 in myData:
-        print(f"| {row1:{max_col1}} | {row2:{max_col2}} |")
-    print("_"*(7+max_col1+max_col2))
+    if basicInfo:
+        total = sum((col2 for _, col2 in myData))
+        MaxItem = myData[0]
+        MinItem = myData[-1]
+        
+        print("Total    : ",total)
+        print(f"Max item : '{MaxItem[0]}' Repeated {MaxItem[1]} Percentage  {((MaxItem[1]*100)/total):.2f}%")
+        print(f"Min item : '{MinItem[0]}' Repeated {MinItem[1]} Percentage  {((MinItem[1]*100)/total):.2f}%")
 
-tablePrint("\nData of characters :", sortedCharacters)
-tablePrint("\nData of words :", sortedWords)
+    if printTable:
+        max_col1 = max(len(col1) for col1, _ in myData)
+        max_col2 = len(str(max(col2 for _, col2 in myData)))
+        print("="*(7+max_col1+max_col2))
+        for row1, row2 in myData:
+            print(f"| {row1:{max_col1}} | {row2:{max_col2}} |")
+        print("_"*(7+max_col1+max_col2))
+    print("."*50)
+
+sortedWords = statistics(file.split(" "))
+sortedCharacters = statistics(file)
+
+printData("\nData of words :", sortedWords,True, False)
+printData("\nData of characters :", sortedCharacters, True, False)
