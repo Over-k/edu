@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drag and Drop Demo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f9f9f9;
+      }
+
+      .container {
+        display: flex;
+        gap: 20px;
+      }
+
+      .list {
+        width: 200px;
+        border: 2px solid #000;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #fff;
+      }
+
+      .list h3 {
+        text-align: center;
+        margin: 0 0 10px;
+      }
+      .list h3::after {
+        content: "";
+        display: block;
+        width: 50%;
+        height: 2px;
+        background-color: #000;
+        margin: 5px auto 0;
+      }
+
+      .item {
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #ccc;
+        border-radius: 20px;
+        background-color: #f1f1f1;
+        text-align: center;
+        cursor: grab;
+      }
+
+      .item:active {
+        cursor: grabbing;
+      }
+
+      .over {
+        border: 2px dashed #000;
+        background-color: #f9f9f9;
+        cursor: default;
+      }
+      .message {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #000;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- <div class="list" id="list1" data-list="1">
+        <h3>list 1</h3>
+        <div class="item" draggable="true" data-item="1">Item 1</div>
+        <div class="item" draggable="true" data-item="2">Item 2</div>
+      </div>
+      <div class="list" id="list2" data-list="2">
+        <h3>list 2</h3> -->
+      </div>
+    </div>
+    <div class="message">Display message.</div>
+
+    <script>
+      const data = [
+        {
+          list: 1,
+          items: [
+            { id: 1, name: "Item 1" },
+            { id: 2, name: "Item 2" },
+            { id: 3, name: "Item 3" },
+          ],
+        },
+        {
+          list: 2,
+          items: [
+            { id: 4, name: "Item 4" },
+            { id: 5, name: "Item 5" },
+            { id: 6, name: "Item 6" },
+          ],
+        },
+      ];
+      const container = document.querySelector(".container");
+      data.forEach((item) => {
+        const list = document.createElement("div");
+        list.classList.add("list");
+        list.setAttribute("data-list", item.list);
+        const h3 = document.createElement("h3");
+        h3.textContent = `List ${item.list}`;
+        list.appendChild(h3);
+        item.items.forEach((i) => {
+          const itemElement = document.createElement("div");
+          itemElement.classList.add("item");
+          itemElement.setAttribute("draggable", "true");
+          itemElement.setAttribute("data-item", i.id);
+          itemElement.textContent = i.name;
+          list.appendChild(itemElement);
+        });
+        container.appendChild(list);
+      });
+      const items = document.querySelectorAll(".item");
+      const lists = document.querySelectorAll(".list");
+      const message = document.querySelector(".message");
+
+      items.forEach((item) => {
+        item.addEventListener("dragstart", dragStart);
+        item.addEventListener("dragend", dragEnd);
+      });
+
+      lists.forEach((list) => {
+        list.addEventListener("dragover", dragOver);
+        list.addEventListener("dragenter", dragEnter);
+        list.addEventListener("dragleave", dragLeave);
+        list.addEventListener("drop", dragDrop);
+      });
+
+      let draggedItem = null;
+
+      function dragStart(event) {
+        draggedItem = this;
+        setTimeout(() => (this.style.display = "none"), 0);
+      }
+
+      function dragEnd(event) {
+        setTimeout(() => {
+          this.style.display = "block";
+          draggedItem = null;
+        }, 0);
+      }
+
+      function dragOver(event) {
+        event.preventDefault();
+      }
+
+      function dragEnter(event) {
+        event.preventDefault();
+        this.classList.add("over");
+      }
+
+      function dragLeave() {
+        this.classList.remove("over");
+      }
+
+function dragDrop() {
+    this.classList.remove("over");
+    if (draggedItem) {
+        this.appendChild(draggedItem);
+
+        // Display a message about the moved item
+        message.innerHTML =
+            "Item: " +
+            draggedItem.dataset.item +
+            " moved to List: " +
+            this.dataset.list;
+
+        // Update the data structure
+        const draggedItemId = parseInt(draggedItem.dataset.item);
+        const targetListId = parseInt(this.dataset.list);
+
+        data.forEach((list) => {
+            // Remove the item from its original list
+            const itemIndex = list.items.findIndex((item) => item.id === draggedItemId);
+            if (itemIndex !== -1) {
+                // Remove the item
+                const [removedItem] = list.items.splice(itemIndex, 1);
+
+                // Add the item to the target list
+                const targetList = data.find((l) => l.list === targetListId);
+                if (targetList) {
+                    targetList.items.push(removedItem);
+                }
+            }
+        });
+
+        // Log the updated data structure
+        console.log(data);
+    }
+}
+    </script>
+  </body>
+</html>
