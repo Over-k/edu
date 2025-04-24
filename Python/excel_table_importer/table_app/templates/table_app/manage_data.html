@@ -1,0 +1,132 @@
+<!-- table_app/templates/table_app/manage_data.html -->
+{% extends 'table_app/base.html' %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow p-6">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold">Manage Data for "{{ table.name }}"</h2>
+        <div>
+            <a href="{% url 'view_data' table.id %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                View Data
+            </a>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="mb-6">
+        <div class="flex border-b">
+            <button id="tab-add-data"
+                class="px-4 py-2 bg-blue-100 rounded-t-lg text-blue-800 font-medium border-b-2 border-blue-500 tab-btn">
+                Add Data Manually
+            </button>
+            <button id="tab-import-excel" class="px-4 py-2 text-gray-500 tab-btn">
+                Import from Excel
+            </button>
+        </div>
+    </div>
+
+    <!-- Tab Content: Add Data Manually -->
+    <div id="content-add-data" class="tab-content">
+        <form method="post" class="space-y-4" id="add-data-form">
+            {% csrf_token %}
+            <input type="hidden" name="add_data" value="1">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {% for field in data_form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">{{ field.label}}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <div class="text-red-500 text-sm mt-1">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+                    Add Data Row
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Tab Content: Import from Excel -->
+    <div id="content-import-excel" class="tab-content hidden">
+        <form method="post" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="import_excel" value="1">
+
+            <div>
+                <label for="{{ excel_form.file.id_for_label }}" class="block text-sm font-medium text-gray-700">Excel
+                    File (.xlsx)</label>
+                <input type="file" name="{{ excel_form.file.name }}" id="{{ excel_form.file.id_for_label }}"
+                    class="mt-1 block w-full" accept=".xlsx" required>
+                {% if excel_form.file.errors %}
+                <div class="text-red-500 text-sm mt-1">{{ excel_form.file.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded p-4 text-blue-800 text-sm">
+                <p><strong>Note:</strong> The Excel file should have headers in the first row that match your table
+                    columns.</p>
+                <p class="mt-2">After uploading, you'll be able to map Excel headers to your table columns.</p>
+            </div>
+
+            <div class="pt-4">
+                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+                    Upload Excel File
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-6 pt-4 border-t">
+        <a href="{% url 'index' %}" class="text-blue-600 hover:text-blue-800">
+            ← Back to Tables
+        </a>
+    </div>
+</div>
+
+<script>
+    // Tab switching functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                // Reset all tabs
+                tabBtns.forEach(b => {
+                    b.classList.remove('bg-blue-100', 'text-blue-800', 'border-b-2', 'border-blue-500');
+                    b.classList.add('text-gray-500');
+                });
+
+                // Hide all content
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+
+                // Activate clicked tab
+                this.classList.remove('text-gray-500');
+                this.classList.add('bg-blue-100', 'text-blue-800', 'border-b-2', 'border-blue-500');
+
+                // Show corresponding content
+                const contentId = 'content-' + this.id.split('-')[1] + '-' + this.id.split('-')[2];
+                document.getElementById(contentId).classList.remove('hidden');
+            });
+        });
+    });
+
+    // Style form fields
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('#add-data-form input[type="text"], #add-data-form input[type="number"], #add-data-form input[type="date"]').forEach(input => {
+            input.classList.add('mt-1', 'block', 'w-full', 'rounded-md', 'border-gray-300', 'shadow-sm', 'focus:border-blue-500', 'focus:ring-blue-500');
+        });
+
+        document.querySelectorAll('#add-data-form input[type="checkbox"]').forEach(input => {
+            input.classList.add('h-4', 'w-4', 'rounded', 'border-gray-300', 'text-blue-600', 'focus:ring-blue-500');
+        });
+    });
+</script>
+{% endblock %}

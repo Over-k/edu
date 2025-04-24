@@ -1,0 +1,31 @@
+<!-- table_app/templates/table_app/create_table.html -->
+{% extends 'table_app/base.html' %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-semibold mb-6">Create New Table</h2>
+
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        <div>
+            <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">Table Name</label>
+            <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                required>
+            {% if form.name.errors %}
+            <div class="text-red-500 text-sm mt-1">{{ form.name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="pt-4">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                Create Table
+            </button>
+            <a href="{% url 'index' %}" class="ml-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,139 @@
+<!-- table_app/templates/table_app/match_headers.html -->
+{% extends 'table_app/base.html' %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-semibold mb-6">Match Excel Headers to Table Columns</h2>
+
+    <div class="bg-blue-50 border border-blue-200 rounded p-4 text-blue-800 text-sm mb-6">
+        <p>Drag and drop Excel headers to match them with your table columns.</p>
+        <p class="mt-2">Headers that are not mapped will be ignored during import.</p>
+    </div>
+
+    <form method="post" action="{% url 'save_header_mapping' excel_import.id %}" id="mapping-form">
+        {% csrf_token %}
+        <input type="hidden" name="mapping" id="mapping-input">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Excel Headers -->
+            <div>
+                <h3 class="text-lg font-medium mb-4">Excel Headers</h3>
+
+                <ul id="excel-headers" class="space-y-2">
+                    {% for header in excel_headers %}
+                    <li class="bg-yellow-50 border border-yellow-300 rounded p-3 cursor-move"
+                        data-header="{{ header }}">
+                        {{ header }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Table Columns -->
+            <div>
+                <h3 class="text-lg font-medium mb-4">Table Columns</h3>
+
+                <div class="space-y-4">
+                    {% for column in table_columns %}
+                    <div class="border rounded p-4">
+                        <div class="font-medium mb-2">{{ column.name }}</div>
+                        <div class="dropzone bg-gray-100 min-h-10 rounded p-2" data-column-id="{{ column.id }}">
+                            <div class="text-gray-500 text-sm dropzone-placeholder">Drop Excel header here</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-between mt-8">
+            <a href="{% url 'manage_data' table.id %}"
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">
+                Cancel
+            </a>
+            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+                Import Data
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize SortableJS for Excel Headers
+        const excelHeadersList = document.getElementById('excel-headers');
+        new Sortable(excelHeadersList, {
+            group: {
+                name: 'shared',
+                pull: 'clone',
+                put: false
+            },
+            animation: 150,
+            sort: false
+        });
+
+        // Initialize SortableJS for each dropzone
+        const dropzones = document.querySelectorAll('.dropzone');
+        const mapping = {};
+
+        dropzones.forEach(dropzone => {
+            new Sortable(dropzone, {
+                group: {
+                    name: 'shared',
+                    put: true
+                },
+                animation: 150,
+                onAdd: function (evt) {
+                    // Remove placeholder text
+                    const placeholder = dropzone.querySelector('.dropzone-placeholder');
+                    if (placeholder) {
+                        placeholder.style.display = 'none';
+                    }
+
+                    // Clear previously mapped headers to this column
+                    const columnId = dropzone.dataset.columnId;
+                    Object.keys(mapping).forEach(header => {
+                        if (mapping[header] === columnId) {
+                            delete mapping[header];
+                        }
+                    });
+
+                    // Update mapping
+                    const header = evt.item.dataset.header;
+                    mapping[header] = columnId;
+
+                    // Update hidden input
+                    document.getElementById('mapping-input').value = JSON.stringify(mapping);
+
+                    // Allow only one item per dropzone
+                    const items = dropzone.querySelectorAll('li');
+                    if (items.length > 1) {
+                        for (let i = 0; i < items.length - 1; i++) {
+                            excelHeadersList.appendChild(items[i]);
+                        }
+                    }
+                },
+                onRemove: function (evt) {
+                    // Show placeholder text if dropzone is empty
+                    if (dropzone.children.length === 1) {
+                        const placeholder = dropzone.querySelector('.dropzone-placeholder');
+                        if (placeholder) {
+                            placeholder.style.display = 'block';
+                        }
+                    }
+
+                    // Update mapping
+                    const header = evt.item.dataset.header;
+                    delete mapping[header];
+
+                    // Update hidden input
+                    document.getElementById('mapping-input').value = JSON.stringify(mapping);
+                }
+            });
+        });
+
+        // Set initial value for mapping input
+        document.getElementById('mapping-input').value = JSON.stringify(mapping);
+    });
+</script>
+{% endblock %}

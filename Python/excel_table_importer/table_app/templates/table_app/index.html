@@ -1,0 +1,65 @@
+<!-- table_app/templates/table_app/index.html -->
+{% extends 'table_app/base.html' %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-semibold mb-6">Welcome to Excel Table Importer</h2>
+
+    <div class="mb-6">
+        <div class="flex border-b">
+            <a href="{% url 'create_table' %}"
+                class="px-4 py-2 bg-blue-100 rounded-t-lg text-blue-800 font-medium border-b-2 border-blue-500">
+                Create Table
+            </a>
+            <span class="px-4 py-2 text-gray-500">Import Data</span>
+            <span class="px-4 py-2 text-gray-500">View Data</span>
+        </div>
+        <div class="p-4 bg-blue-50 rounded-b-lg">
+            <p class="mb-4">Create a custom table by defining columns and data types.</p>
+            <a href="{% url 'create_table' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                Create New Table
+            </a>
+        </div>
+    </div>
+
+    {% if tables %}
+    <div class="mt-8">
+        <h3 class="text-lg font-medium mb-4">Your Tables</h3>
+        <div class="bg-white rounded-lg border">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Created</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for table in tables %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ table.name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ table.created_at|date:"M d, Y" }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex space-x-2">
+                                <a href="{% url 'add_columns' table.id %}"
+                                    class="text-blue-600 hover:text-blue-900">Edit Columns</a>
+                                <a href="{% url 'manage_data' table.id %}"
+                                    class="text-green-600 hover:text-green-900">Manage Data</a>
+                                <a href="{% url 'view_data' table.id %}"
+                                    class="text-indigo-600 hover:text-indigo-900">View Data</a>
+                                <a href="{% url 'delete_table' table.id %}"
+                                    class="text-red-600 hover:text-red-900">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
